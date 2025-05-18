@@ -172,3 +172,12 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+
+# Angular
+
+node_modules/
+dist/
+out-tsc/
+.angular/
+.angular/cache/
+npm-debug.log yarn-error.log .env
