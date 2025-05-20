@@ -1,0 +1,10 @@
+<div class="p-6 max-w-sm mx-auto">
+    <h2 class="text-2xl font-bold mb-4">Connexion</h2>
+    <form (ngSubmit)="login()">
+        <input [(ngModel)]="email" name="email" type="email" placeholder="Email" class="border p-2 mb-2 w-full"
+            required>
+        <input [(ngModel)]="password" name="password" type="password" placeholder="Password"
+            class="border p-2 mb-4 w-full" required>
+        <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded">Se connecter</button>
+    </form>
+</div>
