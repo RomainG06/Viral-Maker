@@ -11,8 +11,16 @@ def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(securit
     token = credentials.credentials
     try:
         user = supabase.auth.get_user(token)
+        print("User from Supabase:", user)
         if not user:
             raise HTTPException(status_code=401, detail="Invalid token")
-        return user
+        print("User ID:", user.user.id)
+        print("User Email:", user.user.email)
+        return {
+        "id": user.user.id,
+        "email": user.user.email
+    }
     except Exception:
         raise HTTPException(status_code=401, detail="Invalid token")
+    
+    
