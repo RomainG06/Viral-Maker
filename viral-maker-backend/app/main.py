@@ -1,7 +1,22 @@
 from fastapi import FastAPI
 from app.api import routes_captions, routes_image, routes_credits, routes_payment, routes_users, routes_themes
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
+
+origins = [
+    "http://localhost:4200",  # ton front Angular
+    "http://127.0.0.1:4200",  # au cas où
+]
+
+# Configuration des CORS pour autoriser les requêtes depuis le front-end
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,  # ou ["*"] pour autoriser tout le monde (à éviter en prod)
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 @app.get("/")
 def read_root():

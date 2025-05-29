@@ -18,7 +18,12 @@ export class LoginComponent {
       alert(error.message);
     } else {
       alert('Connecté ✅');
+      const accessToken = data.session?.access_token;
+      if (accessToken) {
+        localStorage.setItem('access_token', accessToken);
+      }
       console.log(data);
+      console.log(accessToken)
       this.router.navigate(['/home']);
     }
   }

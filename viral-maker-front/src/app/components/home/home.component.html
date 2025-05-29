@@ -12,12 +12,19 @@
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl w-full mt-8">
 
         <div *ngFor="let theme of themes"
-            class="bg-white bg-opacity-20 backdrop-blur-lg rounded-3xl p-6 flex flex-col items-center text-white shadow-xl hover:scale-105 transition transform duration-300 ease-in-out cursor-pointer">
+            class="bg-white bg-opacity-20 backdrop-blur-lg rounded-3xl p-6 flex flex-col items-center text-white shadow-xl hover:scale-105 transition transform duration-300 ease-in-out cursor-pointer"
+            (click)="testGenerateCaption(theme.name)">
             <div class="text-4xl mb-4">🎨</div>
-            <h2 class="text-2xl font-bold mb-2">{{ theme }}</h2>
+            <h2 class="text-2xl font-bold mb-2">{{ theme.name }}</h2>
             <p class="text-center text-sm">Génère un contenu viral sur ce thème !</p>
         </div>
+    </div>
 
+    <div *ngIf="captions.length > 0" class="mt-4">
+        <h2 class="text-xl font-bold mb-2">Résultats :</h2>
+        <ul>
+            <li *ngFor="let caption of captions">{{ caption }}</li>
+        </ul>
     </div>
 
 </div>

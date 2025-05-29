@@ -1,16 +1,25 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
+from openai import OpenAI
 import openai
+from pydantic import BaseModel
 from app.core.config import OPENAI_API_KEY
+from app.services.auth import get_current_user
 
 openai.api_key = OPENAI_API_KEY
 
+client = OpenAI()
+
 router = APIRouter()
 
-@router.get("/generate-caption")
-def generate_caption():
-    response = openai.ChatCompletion.create(
-        model="gpt-4",
-        messages=[{"role": "user", "content": "Génère 3 captions Instagram sur le thème des sneakers"}],
-        max_tokens=150
+class CaptionRequest(BaseModel):
+    theme: str
+
+@router.post("/")
+def generate_caption(request: CaptionRequest, user=Depends(get_current_user)):
+    print(f"User {user.id} requested captions for theme: {request.theme}")
+    # Caption personnalisée selon le thème passé
+    response = client.responses.create(
+        model="gpt-4.1",
+        input=f"Génère 3 captions sur le thème : {request.theme}"
     )
-    return {"captions": response.choices[0].message['content']}
+    return response.output_text

@@ -11,7 +11,7 @@ export class BaseApiService {
 
   protected get<T>(url: string) {
     return this.http.get<T>(`${this.baseUrl}${url}`, {
-      headers: this.getHeaders()
+      //   headers: this.getHeaders()
     });
   }
 

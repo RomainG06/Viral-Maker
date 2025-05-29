@@ -6,3 +6,4 @@ supabase
 pyjwt
 stripe
 httpx
+pydantic
