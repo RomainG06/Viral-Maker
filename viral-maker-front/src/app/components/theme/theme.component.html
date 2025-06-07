@@ -1,0 +1,47 @@
+<div
+    class="min-h-screen bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 flex flex-col items-center p-6 text-white">
+
+    <!-- NavBar -->
+    <div
+        class="w-full flex justify-between items-center p-4 bg-white bg-opacity-10 backdrop-blur-md rounded-xl shadow-lg mb-8">
+        <h2 class="text-2xl font-bold">Thème : {{ themeName }} 🎨</h2>
+        <button (click)="goBack()" class="bg-red-500 hover:bg-red-400 text-white px-4 py-2 rounded-lg transition">
+            Retour
+        </button>
+    </div>
+
+    <!-- Génération de Texte -->
+    <div class="bg-white bg-opacity-20 backdrop-blur-lg rounded-3xl p-6 w-full max-w-2xl shadow-xl mb-8">
+        <h3 class="text-2xl font-bold mb-4">Génération de texte ✏️</h3>
+        <input [(ngModel)]="textPrompt" type="text" placeholder="Décris ton idée..."
+            class="w-full p-3 rounded-lg text-gray-900 mb-4 focus:ring-2 focus:ring-yellow-300 outline-none">
+        <button (click)="testGenerateCaption(textPrompt)"
+            class="bg-yellow-400 hover:bg-yellow-300 text-gray-900 font-semibold py-3 px-6 rounded-2xl shadow-xl transition">
+            Générer le texte
+        </button>
+
+        <div *ngIf="captionResult" class="mt-6">
+            <textarea class="w-full h-40 p-4 rounded-lg text-gray-900" readonly>{{ captionResult }}</textarea>
+        </div>
+
+        <div *ngIf="captionLoading" class="text-center mt-4">⏳ Génération en cours...</div>
+    </div>
+
+    <!-- Génération d'Image -->
+    <div class="bg-white bg-opacity-20 backdrop-blur-lg rounded-3xl p-6 w-full max-w-2xl shadow-xl">
+        <h3 class="text-2xl font-bold mb-4">Génération d’image 🖼️</h3>
+        <input [(ngModel)]="imagePrompt" type="text" placeholder="Décris ton image..."
+            class="w-full p-3 rounded-lg text-gray-900 mb-4 focus:ring-2 focus:ring-yellow-300 outline-none">
+        <button (click)="generateImage()"
+            class="bg-yellow-400 hover:bg-yellow-300 text-gray-900 font-semibold py-3 px-6 rounded-2xl shadow-xl transition">
+            Générer l’image
+        </button>
+
+        <div *ngIf="imageResult" class="mt-6 flex justify-center">
+            <img [src]="imageResult" alt="Image générée" class="rounded-xl shadow-lg max-h-96">
+        </div>
+
+        <div *ngIf="imageLoading" class="text-center mt-4">⏳ Génération en cours...</div>
+    </div>
+
+</div>

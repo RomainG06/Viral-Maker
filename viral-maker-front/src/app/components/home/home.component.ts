@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { Theme } from 'src/app/models/theme';
 import { CaptionService } from 'src/app/services/caption/caption.service';
 import { ThemeService } from 'src/app/services/theme/theme.service';
@@ -9,7 +10,7 @@ import { ThemeService } from 'src/app/services/theme/theme.service';
 })
 export class HomeComponent {
 
-  constructor(private themeService: ThemeService, private captionService: CaptionService) { }
+  constructor(private themeService: ThemeService, private captionService: CaptionService, private router: Router) { }
   themes: Theme[] = [];
   captions: string[] = [];
 
@@ -44,5 +45,10 @@ export class HomeComponent {
         console.error('Erreur lors de la génération des captions', err);
       }
     });
+  }
+
+
+  goToTheme(name: string) {
+    this.router.navigate(['/theme', name]);
   }
 }

@@ -9,22 +9,29 @@ import { SupabaseService } from 'src/app/services/supabase-auth/supabase.service
 export class LoginComponent {
   email = '';
   password = '';
+  isLoading: boolean = false;
+  errorMessage: string | null = null;
 
   constructor(private supabase: SupabaseService, private router: Router) { }
 
   async login() {
+    this.isLoading = true;
+    this.errorMessage = null;
     const { data, error } = await this.supabase.signIn(this.email, this.password);
+    this.isLoading = false;
     if (error) {
-      alert(error.message);
+      this.errorMessage = error.message;
     } else {
-      alert('Connecté ✅');
       const accessToken = data.session?.access_token;
       if (accessToken) {
         localStorage.setItem('access_token', accessToken);
       }
-      console.log(data);
-      console.log(accessToken)
       this.router.navigate(['/home']);
     }
   }
+
+  goToRegister() {
+    this.router.navigate(['/register']);
+  }
+
 }
