@@ -25,6 +25,6 @@ def read_root():
 app.include_router(routes_captions.router, prefix="/generate-captions")
 app.include_router(routes_image.router, prefix="/generate-image")
 app.include_router(routes_credits.router, prefix="/credits")
-app.include_router(routes_payment.router, prefix="/purchase-credits")
+app.include_router(routes_payment.router, prefix="/payment")
 app.include_router(routes_users.router, prefix="/users")
 app.include_router(routes_themes.router, prefix="/themes")

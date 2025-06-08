@@ -9,4 +9,8 @@ export class CreditsService extends BaseApiService {
   getCredits(): Observable<any> {
     return this.get<any>('/credits');
   }
+
+  purchaseCredits(amount: number): Observable<any> {
+    return this.post<any>('/credits/purchase-credits', { amount });
+  }
 }

@@ -9,10 +9,11 @@ import { CaptionService } from 'src/app/services/caption/caption.service';
 })
 export class ThemeComponent {
   themeName: string = '';
+  prePrompt: string = '';
   textPrompt: string = '';
   captionResult: string = '';
   captionLoading = false;
-  captions: string[] = [];
+  captions: string = '';
 
   imagePrompt: string = '';
   imageResult: string = '';
@@ -26,17 +27,18 @@ export class ThemeComponent {
 
   ngOnInit(): void {
     this.themeName = this.route.snapshot.paramMap.get('name') || '';
+    this.prePrompt = `Tu es un expert de "${this.themeName}" génere un résultat en utilisant un langage simple et accessible. tout en contenant des informations pertinentes et intéressantes sur le thème "${this.themeName}".`;
   }
 
   goBack() {
     this.router.navigate(['/home']);
   }
 
-  testGenerateCaption(name: string) {
-    this.captionService.generateCaptions(name).subscribe({
+  testGenerateCaption(prompt: string) {
+    this.captionService.generateCaptions(this.prePrompt + '' + prompt).subscribe({
       next: (response) => {
         console.log('Captions générées avec succès:', response);
-        this.captions = response.captions.split('\n');
+        this.captions = response.captions;
         console.log(this.captions);
       },
       error: (err) => {

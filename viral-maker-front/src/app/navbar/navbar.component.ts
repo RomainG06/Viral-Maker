@@ -19,6 +19,7 @@ export class NavbarComponent {
       menuBtn.addEventListener('click', () => {
         mobileMenu?.classList.toggle('hidden');
       });
+      this.refreshCredits();
     }
 
     this.creditsService.getCredits().subscribe(res => {
@@ -28,4 +29,25 @@ export class NavbarComponent {
     });
   }
 
+  buyCredits() {
+    this.creditsService.purchaseCredits(50).subscribe({
+      next: (res) => {
+        console.log('Achat de crédits réussi:', res);
+        alert(res.message);
+        this.refreshCredits();
+      },
+      error: (err) => {
+        console.error('Erreur lors de l\'achat de crédits:', err);
+        alert(err);
+      }
+    });
+  }
+
+  refreshCredits() {
+    this.creditsService.getCredits().subscribe({
+      next: (res) => {
+        this.credits = res.credits_remaining;
+      }
+    });
+  }
 }

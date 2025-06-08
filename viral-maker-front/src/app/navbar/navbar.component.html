@@ -6,8 +6,15 @@
     <div class="hidden md:flex items-center space-x-6">
         <a href="/home" class="text-gray-600 hover:text-indigo-600 transition">Home</a>
         <a routerLink="/login" class="text-blue-600 hover:underline">Login</a>
+
         <span id="credits-display"
             class="font-medium bg-indigo-50 text-indigo-600 px-3 py-1 rounded-full text-sm">Crédits: 0</span>
+
+        <button
+            class="bg-yellow-400 hover:bg-yellow-300 text-gray-900 font-semibold py-2 px-4 rounded-xl shadow transition"
+            (click)="buyCredits()">
+            ⚡ Acheter des crédits
+        </button>
     </div>
 
     <!-- Mobile menu button -->
@@ -26,5 +33,12 @@
     <a href="/home" class="block px-4 py-2 text-gray-600 hover:bg-indigo-50">Home</a>
     <a href="/themes" class="block px-4 py-2 text-gray-600 hover:bg-indigo-50">Themes</a>
     <a href="/generate" class="block px-4 py-2 text-gray-600 hover:bg-indigo-50">Générer</a>
+
     <span id="mobile-credits-display" class="block px-4 py-2 font-medium text-indigo-600">Crédits: 0</span>
+
+    <button
+        class="m-4 w-[calc(100%-2rem)] bg-yellow-400 hover:bg-yellow-300 text-gray-900 font-semibold py-2 px-4 rounded-xl shadow transition"
+        (click)="buyCredits()">
+        ⚡ Acheter des crédits
+    </button>
 </div>
