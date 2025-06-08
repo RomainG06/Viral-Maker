@@ -10,6 +10,7 @@ import { Credits } from '../models/credits';
 export class NavbarComponent {
   constructor(private creditsService: CreditsService) { }
   credits: Credits | undefined;
+  isLoggedIn = false;
 
   ngOnInit() {
     var menuBtn = document.getElementById('menu-btn');
@@ -27,6 +28,7 @@ export class NavbarComponent {
       document.getElementById("credits-display")!.innerText = `Crédits: ${credits}`;
       document.getElementById("mobile-credits-display")!.innerText = `Crédits: ${credits}`;
     });
+    this.isLoggedIn = !!localStorage.getItem('access_token');
   }
 
   buyCredits() {
@@ -50,4 +52,10 @@ export class NavbarComponent {
       }
     });
   }
+
+  logout() {
+    localStorage.removeItem('access_token');
+    window.location.reload(); // ou mieux : this.router.navigate(['/login']);
+  }
+
 }

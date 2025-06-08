@@ -16,7 +16,7 @@ export class ThemeComponent {
   captions: string = '';
 
   imagePrompt: string = '';
-  imageResult: string = '';
+  imageBase64: string = '';
   imageLoading = false;
 
   constructor(
@@ -35,31 +35,32 @@ export class ThemeComponent {
   }
 
   testGenerateCaption(prompt: string) {
-    this.captionService.generateCaptions(this.prePrompt + '' + prompt).subscribe({
+    this.captionLoading = true;
+    this.captionResult = '';
+
+    this.captionService.generateCaptions(this.prePrompt + ' ' + prompt).subscribe({
       next: (response) => {
-        console.log('Captions générées avec succès:', response);
-        this.captions = response.captions;
-        console.log(this.captions);
+        this.captionResult = response;
+        this.captionLoading = false;
       },
       error: (err) => {
-        console.error('Erreur lors de la génération des captions', err);
+        this.captionLoading = false;
       }
     });
   }
 
   generateImage() {
-    /*  if (!this.imagePrompt) return;
-     this.imageLoading = true;
-     this.apiService.post('/generate-image', { prompt: this.imagePrompt })
-       .subscribe({
-         next: (res: any) => {
-           this.imageResult = res.image_url;
-           this.imageLoading = false;
-         },
-         error: () => {
-           this.imageResult = '';
-           this.imageLoading = false;
-         }
-       }); */
+    this.imageLoading = true;
+    this.captionService.generateCaptionsImage(this.prePrompt + ' ' + this.imagePrompt).subscribe({
+      next: (response) => {
+        this.imageBase64 = response[0];
+        this.imageLoading = false;
+        console.log('Image générée avec succès', this.imageBase64);
+      }
+      , error: (err) => {
+        this.imageLoading = false;
+        console.error('Erreur lors de la génération de l\'image', err);
+      }
+    });
   }
 }

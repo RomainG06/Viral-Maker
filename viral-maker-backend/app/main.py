@@ -5,8 +5,8 @@ from fastapi.middleware.cors import CORSMiddleware
 app = FastAPI()
 
 origins = [
-    "http://localhost:4200",  # ton front Angular
-    "http://127.0.0.1:4200",  # au cas où
+    "http://localhost:4200",
+    "http://127.0.0.1:4200",
 ]
 
 # Configuration des CORS pour autoriser les requêtes depuis le front-end

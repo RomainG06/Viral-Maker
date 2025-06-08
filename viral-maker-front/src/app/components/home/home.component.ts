@@ -26,7 +26,6 @@ export class HomeComponent {
     this.themeService.getThemes().subscribe({
       next: (data) => {
         this.themes = data;
-        console.log('Thèmes récupérés avec succès:', this.themes);
       },
       error: (error) => {
         console.error('Erreur lors de la récupération des thèmes:', error);

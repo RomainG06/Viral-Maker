@@ -7,8 +7,13 @@ import { BaseApiService } from '../base-api/base-api.service';
 })
 export class CaptionService extends BaseApiService {
 
-  generateCaptions(theme: string): Observable<any> {
-    const body = { theme };
+  generateCaptions(prompt: string): Observable<any> {
+    const body = { prompt };
     return this.post<any>('/generate-captions', body);
+  }
+
+  generateCaptionsImage(prompt: string): Observable<any> {
+    const body = { prompt };
+    return this.post<any>('/generate-captions/image', body);
   }
 }
