@@ -29,4 +29,13 @@ export class SupabaseService {
   getUser() {
     return this.supabase.auth.getUser();
   }
+
+  async getUserId(): Promise<string | null> {
+    const { data, error } = await this.supabase.auth.getUser();
+    if (error || !data.user) {
+      console.error('Erreur récupération user', error);
+      return null;
+    }
+    return data.user.id;
+  }
 }

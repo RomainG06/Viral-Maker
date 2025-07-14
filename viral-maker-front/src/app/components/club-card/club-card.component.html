@@ -1,0 +1,21 @@
+<div (click)="goToDetails()"
+    class="max-w-sm rounded-lg overflow-hidden shadow-lg bg-white border-2 border-indigo-600 hover:border-yellow-400 transition duration-300 cursor-pointer">
+    <img class="w-full h-40 object-cover" [src]="club.logo_url || 'https://via.placeholder.com/400x160?text=No+Logo'"
+        alt="{{ club.name }} logo" />
+    <div class="px-6 py-4">
+        <div class="font-bold text-xl text-indigo-800 mb-1">{{ club.name }}</div>
+        <p class="text-gray-700 text-sm line-clamp-3">{{ club.description }}</p>
+    </div>
+    <div
+        class="px-6 pt-4 pb-4 flex items-center justify-between border-t border-gray-200 text-sm text-gray-600 font-semibold">
+        <span class="flex items-center space-x-1">
+            <svg class="w-5 h-5 text-indigo-500" fill="currentColor" viewBox="0 0 20 20"
+                xmlns="http://www.w3.org/2000/svg">
+                <path d="M10 2a6 6 0 00-6 6c0 4.418 6 10 6 10s6-5.582 6-10a6 6 0 00-6-6z" />
+            </svg>
+            <span>{{ club.city }}</span>
+        </span>
+        <span class="bg-indigo-600 text-white px-2 py-1 rounded-full uppercase tracking-wide">{{ club.sport_name ||
+            'Sport' }}</span>
+    </div>
+</div>

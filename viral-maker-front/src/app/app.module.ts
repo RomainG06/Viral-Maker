@@ -12,6 +12,10 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { RegisterComponent } from './components/register/register.component';
 import { SportComponent } from './components/sport/sport.component';
 import { CreateClubComponent } from './components/create-club/create-club.component';
+import { MyClubsComponent } from './pages/my-clubs/my-clubs.component';
+import { ClubCardComponent } from './components/club-card/club-card.component';
+import { ExploreClubsComponent } from './pages/explore-clubs/explore-clubs.component';
+import { ClubDetailsComponent } from './pages/club-details/club-details.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +26,11 @@ import { CreateClubComponent } from './components/create-club/create-club.compon
     SportComponent,
     ProfileComponent,
     RegisterComponent,
-    CreateClubComponent
+    CreateClubComponent,
+    MyClubsComponent,
+    ClubCardComponent,
+    ExploreClubsComponent,
+    ClubDetailsComponent
   ],
   imports: [
     BrowserModule,

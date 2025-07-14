@@ -1,0 +1,27 @@
+<div class="max-w-5xl mx-auto py-10 px-4 animate-fadeIn">
+    <div class="text-center mb-10">
+        <h1 class="text-5xl font-extrabold text-indigo-700 tracking-tight mb-2">{{ club?.name }}</h1>
+        <p class="text-lg text-gray-600">{{ club?.city }} · {{ club?.description }}</p>
+    </div>
+
+    <div class="flex justify-center mb-10">
+        <img [src]="club?.logo_url || 'https://via.placeholder.com/150'" alt="logo club"
+            class="w-36 h-36 rounded-full shadow-xl border-4 border-indigo-500 object-cover transition transform hover:scale-105 duration-300">
+    </div>
+
+    <h2 class="text-3xl font-bold text-gray-800 mb-6">📢 Dernières publications</h2>
+
+    <div *ngIf="posts.length === 0" class="text-gray-500 text-center text-lg">Aucune publication pour ce club.</div>
+
+    <div *ngIf="posts.length > 0" class="space-y-6">
+        <div *ngFor="let post of posts"
+            class="bg-white p-6 rounded-xl shadow-lg border border-gray-100 hover:shadow-2xl transition duration-300 ease-in-out transform hover:-translate-y-1">
+            <p class="text-gray-800 text-lg leading-relaxed mb-3">{{ post.content }}</p>
+            <div class="flex items-center justify-between">
+                <span class="text-sm text-gray-500">Publié le {{ post.created_at | date:'medium' }}</span>
+                <button class="text-indigo-600 text-sm font-medium hover:underline transition"
+                    (click)="likePost(post)">👍 J’aime</button>
+            </div>
+        </div>
+    </div>
+</div>
