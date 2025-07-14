@@ -4,14 +4,15 @@ import { Club } from 'src/app/models/club';
 import { Sport } from 'src/app/models/theme';
 import { ClubService } from 'src/app/services/club/club.service';
 import { SportService } from 'src/app/services/sport/sport.service';
+import { SupabaseService } from 'src/app/services/supabase-auth/supabase.service';
 import { Utils } from 'src/app/utils/utils';
+
 
 @Component({
   selector: 'app-create-club',
   templateUrl: './create-club.component.html'
 })
 export class CreateClubComponent implements OnInit {
-
   club: Club = new Club({
     name: '',
     description: '',
@@ -21,11 +22,15 @@ export class CreateClubComponent implements OnInit {
   });
 
   sports: Sport[] = [];
+  selectedFile: File | null = null;
+  logoUrl: string = '';
+  previewUrl: string | null = null;
 
   constructor(
     private clubService: ClubService,
     private sportService: SportService,
-    private router: Router
+    private router: Router,
+    private supabase: SupabaseService
   ) { }
 
   ngOnInit(): void {
@@ -58,8 +63,63 @@ export class CreateClubComponent implements OnInit {
     }
   }
 
+  onFileSelected(event: any) {
+    const file = event.target.files[0];
+    if (file) {
+      this.selectedFile = file;
+
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.previewUrl = reader.result as string;
+      };
+      reader.readAsDataURL(file);
+
+      this.uploadLogo();
+    }
+  }
+
+  removeLogo() {
+    this.selectedFile = null;
+    this.previewUrl = null;
+    this.club.logo_url = undefined;
+  }
+
+  async uploadLogo() {
+    if (!this.selectedFile) return;
+
+    const fileExt = this.selectedFile.name.split('.').pop();
+    const fileName = `private/${Date.now()}.${fileExt}`;
+    const { data, error } = await this.supabase.uploadLogo(this.selectedFile, fileName);
+
+    if (error) {
+      console.error('Erreur upload :', error);
+      debugger
+      return;
+    }
+
+    const publicUrl = this.supabase.getPublicUrl(fileName);
+    this.club.logo_url = publicUrl;
+    debugger
+  }
+
+  onDragOver(event: DragEvent) {
+    event.preventDefault();
+    event.stopPropagation();
+  }
+
+  onDrop(event: DragEvent) {
+    event.preventDefault();
+    event.stopPropagation();
+
+    if (event.dataTransfer && event.dataTransfer.files.length > 0) {
+      this.selectedFile = event.dataTransfer.files[0];
+      this.uploadLogo();
+      event.dataTransfer.clearData();
+    }
+  }
+
   onSubmit(): void {
-    if (!this.club.name || !this.club.description || !this.club.sport_id || !this.club.city || !this.club.user_id_owner) {
+    if (!this.club.name || !this.club.description || !this.club.sport_id || !this.club.city || !this.club.user_id_owner || !this.club.logo_url) {
       alert('Veuillez remplir tous les champs obligatoires.');
       return;
     }
@@ -67,8 +127,7 @@ export class CreateClubComponent implements OnInit {
     this.clubService.createClub(this.club).subscribe({
       next: (createdClub) => {
         alert('Club créé avec succès !');
-        // Par exemple, rediriger vers la page du club ou liste
-        this.router.navigate(['/clubs', createdClub.slug || createdClub.id]);
+        this.router.navigate(['/club', createdClub.slug]);
       },
       error: (err) => {
         console.error('Erreur création club', err);
