@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { Theme } from 'src/app/models/theme';
+import { Sport } from 'src/app/models/theme';
 import { CaptionService } from 'src/app/services/caption/caption.service';
-import { ThemeService } from 'src/app/services/theme/theme.service';
+import { SportService } from 'src/app/services/sport/sport.service';
 
 @Component({
   selector: 'app-home',
@@ -10,8 +10,8 @@ import { ThemeService } from 'src/app/services/theme/theme.service';
 })
 export class HomeComponent {
 
-  constructor(private themeService: ThemeService, private captionService: CaptionService, private router: Router) { }
-  themes: Theme[] = [];
+  constructor(private sportService: SportService, private captionService: CaptionService, private router: Router) { }
+  sports: Sport[] = [];
   captions: string[] = [];
 
   ngOnInit() {
@@ -23,9 +23,10 @@ export class HomeComponent {
   }
 
   getThemes() {
-    this.themeService.getThemes().subscribe({
+    this.sportService.getSports().subscribe({
       next: (data) => {
-        this.themes = data;
+        console.log('Thèmes récupérés:', data);
+        this.sports = data;
       },
       error: (error) => {
         console.error('Erreur lors de la récupération des thèmes:', error);
@@ -46,8 +47,12 @@ export class HomeComponent {
     });
   }
 
-
-  goToTheme(name: string) {
-    this.router.navigate(['/theme', name]);
+  goToSport(name: string) {
+    this.router.navigate(['/sport', name]);
   }
+
+  goToCreateClub() {
+    this.router.navigate(['/create-club']);
+  }
+
 }

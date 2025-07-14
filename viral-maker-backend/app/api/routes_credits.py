@@ -12,7 +12,7 @@ router = APIRouter()
 supabase = get_supabase()
 stripe.api_key = os.getenv("STRIPE_SECRET_KEY")
 
-@router.get("/")
+@router.get("")
 def get_credits(user=Depends(get_current_user)):
     user_id = user["id"]
     response = supabase.table("credits").select("*").eq("user_id", user_id).single().execute()
@@ -22,7 +22,7 @@ def get_credits(user=Depends(get_current_user)):
 
     return {"credits": response.data["credits_remaining"]}
 
-@router.post("/purchase-credits/")
+@router.post("/purchase-credits")
 def purchase_credits(request: PurchaseCreditsRequest, user=Depends(get_current_user)):
     user_id = user["id"]
 

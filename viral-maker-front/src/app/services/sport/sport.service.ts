@@ -5,9 +5,9 @@ import { BaseApiService } from '../base-api/base-api.service';
 @Injectable({
   providedIn: 'root'
 })
-export class ThemeService extends BaseApiService {
+export class SportService extends BaseApiService {
 
-  getThemes(): Observable<any> {
-    return this.get('/themes/');
+  getSports(): Observable<any> {
+    return this.get('/sports/');
   }
 }

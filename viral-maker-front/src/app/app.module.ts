@@ -8,9 +8,10 @@ import { LoginComponent } from './components/login/login.component';
 import { HomeComponent } from './components/home/home.component';
 import { HttpClientModule } from '@angular/common/http';
 import { NavbarComponent } from './navbar/navbar.component';
-import { ThemeComponent } from './components/theme/theme.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { RegisterComponent } from './components/register/register.component';
+import { SportComponent } from './components/sport/sport.component';
+import { CreateClubComponent } from './components/create-club/create-club.component';
 
 @NgModule({
   declarations: [
@@ -18,9 +19,10 @@ import { RegisterComponent } from './components/register/register.component';
     LoginComponent,
     HomeComponent,
     NavbarComponent,
-    ThemeComponent,
+    SportComponent,
     ProfileComponent,
-    RegisterComponent
+    RegisterComponent,
+    CreateClubComponent
   ],
   imports: [
     BrowserModule,

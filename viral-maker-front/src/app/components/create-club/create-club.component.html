@@ -1,0 +1,59 @@
+<div class="max-w-md mx-auto mt-10 p-6 bg-white rounded-lg shadow-md">
+    <h2 class="text-2xl font-semibold mb-6 text-center">Créer un nouveau club</h2>
+
+    <form (ngSubmit)="onSubmit()" #clubForm="ngForm" class="space-y-5">
+
+        <div>
+            <label for="name" class="block text-gray-700 font-medium mb-1">Nom du club <span
+                    class="text-red-500">*</span></label>
+            <input type="text" id="name" name="name" required [(ngModel)]="club.name" #name="ngModel"
+                class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="Ex: Les Tigres" />
+            <div *ngIf="name.invalid && name.touched" class="text-red-500 text-sm mt-1">Le nom est obligatoire.</div>
+        </div>
+
+        <div>
+            <label for="description" class="block text-gray-700 font-medium mb-1">Description <span
+                    class="text-red-500">*</span></label>
+            <textarea id="description" name="description" required rows="3" [(ngModel)]="club.description"
+                #description="ngModel"
+                class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="Décrivez le club"></textarea>
+            <div *ngIf="description.invalid && description.touched" class="text-red-500 text-sm mt-1">La description est
+                obligatoire.</div>
+        </div>
+
+        <div>
+            <label for="sport_id" class="block text-gray-700 font-medium mb-1">Sport <span
+                    class="text-red-500">*</span></label>
+            <select id="sport_id" name="sport_id" required [(ngModel)]="club.sport_id" #sport_id="ngModel"
+                class="w-full border border-gray-300 rounded px-3 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <option value="" disabled selected>Choisissez un sport</option>
+                <option *ngFor="let sport of sports" [value]="sport.id">{{ sport.name }}</option>
+            </select>
+            <div *ngIf="sport_id.invalid && sport_id.touched" class="text-red-500 text-sm mt-1">Le sport est
+                obligatoire.</div>
+        </div>
+
+        <div>
+            <label for="city" class="block text-gray-700 font-medium mb-1">Ville <span
+                    class="text-red-500">*</span></label>
+            <input type="text" id="city" name="city" required [(ngModel)]="club.city" #city="ngModel"
+                class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="Ex: Paris" />
+            <div *ngIf="city.invalid && city.touched" class="text-red-500 text-sm mt-1">La ville est obligatoire.</div>
+        </div>
+
+        <div>
+            <label for="logo_url" class="block text-gray-700 font-medium mb-1">URL du logo</label>
+            <input type="url" id="logo_url" name="logo_url" [(ngModel)]="club.logo_url"
+                class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="https://exemple.com/logo.png" />
+        </div>
+
+        <button type="submit" [disabled]="clubForm.invalid"
+            class="w-full bg-blue-600 text-white font-semibold py-2 rounded hover:bg-blue-700 disabled:opacity-50 transition">
+            Créer le club
+        </button>
+    </form>
+</div>

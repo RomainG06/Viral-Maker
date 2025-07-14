@@ -3,12 +3,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CaptionService } from 'src/app/services/caption/caption.service';
 
 @Component({
-  selector: 'app-theme',
-  templateUrl: './theme.component.html',
-  styleUrls: ['./theme.component.css']
+  selector: 'app-sport',
+  templateUrl: './sport.component.html',
+  styleUrls: ['./sport.component.css']
 })
-export class ThemeComponent {
-  themeName: string = '';
+export class SportComponent {
+  sportName: string = '';
   prePrompt: string = '';
   textPrompt: string = '';
   captionResult: string = '';
@@ -26,8 +26,8 @@ export class ThemeComponent {
   ) { }
 
   ngOnInit(): void {
-    this.themeName = this.route.snapshot.paramMap.get('name') || '';
-    this.prePrompt = `Tu es un expert de "${this.themeName}" génere un résultat en utilisant un langage simple et accessible. tout en contenant des informations pertinentes et intéressantes sur le thème "${this.themeName}".`;
+    this.sportName = this.route.snapshot.paramMap.get('name') || '';
+    this.prePrompt = `Tu es un expert de "${this.sportName}" génere un résultat en utilisant un langage simple et accessible. tout en contenant des informations pertinentes et intéressantes sur le thème "${this.sportName}".`;
   }
 
   goBack() {
