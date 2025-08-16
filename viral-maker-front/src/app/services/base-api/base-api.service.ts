@@ -21,6 +21,12 @@ export class BaseApiService {
     });
   }
 
+  protected delete(url: string) {
+    return this.http.delete(`${this.baseUrl}${url}`, {
+      headers: this.getHeaders()
+    });
+  }
+
   private getHeaders() {
     const token = localStorage.getItem('access_token');
     return new HttpHeaders({

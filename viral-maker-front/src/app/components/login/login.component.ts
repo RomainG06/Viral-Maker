@@ -22,10 +22,8 @@ export class LoginComponent {
     if (error) {
       this.errorMessage = error.message;
     } else {
-      const accessToken = data.session?.access_token;
-      if (accessToken) {
-        localStorage.setItem('access_token', accessToken);
-      }
+      localStorage.setItem('access_token', data.session.access_token);
+      localStorage.setItem('refresh_token', data.session.refresh_token);
       this.router.navigate(['/home']);
     }
   }

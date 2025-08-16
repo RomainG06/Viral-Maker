@@ -1,26 +1,21 @@
-from fastapi import Depends, HTTPException, status
+from fastapi import Depends, HTTPException
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from supabase import create_client
 import os
 
 security = HTTPBearer()
 
-supabase = create_client(os.getenv("SUPABASE_URL"), os.getenv("SUPABASE_KEY"))
+SUPABASE_URL = os.getenv("SUPABASE_URL")
+SUPABASE_KEY = os.getenv("SUPABASE_KEY")
+
+supabase = create_client(SUPABASE_URL, SUPABASE_KEY)
 
 def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(security)):
     token = credentials.credentials
     try:
         user = supabase.auth.get_user(token)
-        print("User from Supabase:", user)
-        if not user:
+        if not user or not getattr(user, "user", None):
             raise HTTPException(status_code=401, detail="Invalid token")
-        print("User ID:", user.user.id)
-        print("User Email:", user.user.email)
-        return {
-        "id": user.user.id,
-        "email": user.user.email
-    }
+        return {"id": user.user.id, "email": user.user.email}
     except Exception:
         raise HTTPException(status_code=401, detail="Invalid token")
-    
-    

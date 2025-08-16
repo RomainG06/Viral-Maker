@@ -1,4 +1,26 @@
 <div class="max-w-5xl mx-auto py-10 px-4 animate-fadeIn">
+    <div class="absolute top-15 right-6 flex gap-3 z-10">
+        <button (click)="null"
+            class="w-10 h-10 flex items-center justify-center bg-yellow-400 hover:bg-yellow-500 rounded-full shadow transition">
+            ✏️
+        </button>
+        <button (click)="confirmDeleteClub()"
+            class="w-10 h-10 flex items-center justify-center bg-red-500 hover:bg-red-600 text-white rounded-full shadow transition">
+            🗑️
+        </button>
+        <button (click)="toggleFollow()" [ngClass]="{
+            'bg-indigo-500 text-white hover:bg-indigo-600': !isFollowing,
+            'bg-gray-300 text-gray-700 hover:bg-gray-400': isFollowing
+        }" class="w-10 h-10 flex items-center justify-center rounded-full shadow transition">
+            {{ isFollowing ? '✔️' : '➕' }}
+        </button>
+        <button (click)="toggleFollow()" class="px-4 py-2 rounded-full shadow text-white"
+            [ngClass]="isFollowing ? 'bg-gray-500 hover:bg-gray-600' : 'bg-yellow-400 hover:bg-yellow-500'">
+            {{ isFollowing ? 'Ne plus suivre' : 'Suivre' }}
+        </button>
+
+    </div>
+
     <div class="text-center mb-10">
         <h1 class="text-5xl font-extrabold text-indigo-700 tracking-tight mb-2">{{ club?.name }}</h1>
         <p class="text-lg text-gray-600">{{ club?.city }} · {{ club?.description }}</p>

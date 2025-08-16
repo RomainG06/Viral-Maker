@@ -3,17 +3,14 @@
         Explorer les Clubs Sportifs 🏆
     </h2>
 
-    <!-- Message si aucun club -->
     <div *ngIf="clubs.length === 0" class="text-center text-gray-500 text-lg mt-20">
         Aucun club disponible pour le moment. ⚽🏀🎾
     </div>
 
-    <!-- Grille de clubs -->
     <div *ngIf="clubs.length > 0" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
         <app-club-card *ngFor="let club of clubs" [club]="club"></app-club-card>
     </div>
 
-    <!-- Bouton charger plus -->
     <div *ngIf="clubs.length > 0" class="flex justify-center mt-12">
         <button (click)="loadMore()"
             class="bg-yellow-400 hover:bg-yellow-300 text-gray-900 font-semibold py-3 px-6 rounded-xl shadow-md transition duration-300">

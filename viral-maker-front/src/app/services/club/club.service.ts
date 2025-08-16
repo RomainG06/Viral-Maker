@@ -36,8 +36,33 @@ export class ClubService extends BaseApiService {
     return this.http.get(`${this.baseUrl}/clubs/explore`, { params });
   }
 
+  updateClub(id: string, club: Partial<Club>): Observable<Club> {
+    return this.http.put<Club>(`${this.baseUrl}/clubs/${id}`, club, {
+    });
+  }
+
+  deleteClub(id: string): Observable<any> {
+    return super.delete(`/clubs/${id}`);
+  }
+
+
   getClubBySlug(slug: string): Observable<any> {
     return this.get<any>(`/clubs/slug/${slug}`);
   }
 
+  getSportNameById(id: number) {
+    return this.get<{ name: string }>(`/sports/${id}`);
+  }
+
+  followClub(clubId: string): Observable<any> {
+    return this.post(`/clubs/${clubId}/follow`, {});
+  }
+
+  unfollowClub(clubId: string): Observable<any> {
+    return this.post(`/clubs/${clubId}/unfollow`, {});
+  }
+
+  getClubFollowers(clubId: string): Observable<{ count: number; followers: string[] }> {
+    return this.get<{ count: number; followers: string[] }>(`/clubs/${clubId}/followers`);
+  }
 }

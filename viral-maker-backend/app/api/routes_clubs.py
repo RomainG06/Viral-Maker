@@ -1,6 +1,7 @@
-from fastapi import APIRouter, HTTPException, Query
+from fastapi import APIRouter, Depends, HTTPException, Query
 from pydantic import BaseModel
 from app.models.club_create import ClubCreate
+from app.services.auth import get_current_user
 from app.services.supabase_client import get_supabase
 from uuid import uuid4
 from slugify import slugify
@@ -9,7 +10,6 @@ router = APIRouter()
 
 supabase = get_supabase()
 
-# 📥 Route création de club
 @router.post("")
 def create_club(club: ClubCreate):
     club_id = str(uuid4())
@@ -67,3 +67,69 @@ def get_club_by_slug(slug: str):
 
     return {"club": response.data}
 
+@router.put("/clubs/{id}")
+def update_club(id: str, updated_data: dict, user=Depends(get_current_user)):
+    supabase = get_supabase()
+    
+    club = supabase.table("clubs").select("*").eq("id", id).single().execute()
+    if not club.data:
+        raise HTTPException(status_code=404, detail="Club introuvable")
+    if club.data["user_id_owner"] != user["id"]:
+        raise HTTPException(status_code=403, detail="Accès refusé")
+
+    response = supabase.table("clubs").update(updated_data).eq("id", id).execute()
+    return response.data
+
+@router.delete("/{id}")
+def delete_club(id: str, user=Depends(get_current_user)):
+    print("DELETE route called with ID:", id)
+    supabase = get_supabase()
+    print("ID reçu pour suppression:", id)
+    club = supabase.table("clubs").select("*").eq("id", id).single().execute()
+    print("Résultat Supabase:", club)
+    print("Club to delete:", club)
+    if not club.data:
+        raise HTTPException(status_code=404, detail="Club introuvable")
+    if club.data["user_id_owner"] != user["id"]:
+        raise HTTPException(status_code=403, detail="Accès refusé")
+
+    logo_url = club.data.get("logo_url")
+    if logo_url:
+        from urllib.parse import urlparse
+        parsed = urlparse(logo_url)
+        path_parts = parsed.path.split('/')
+        file_key = '/'.join(path_parts[3:])
+        supabase.storage.from_("club-logos").remove([file_key])
+
+    supabase.table("clubs").delete().eq("id", id).execute()
+    return {"message": "Club supprimé avec succès"}
+
+@router.post("/{club_id}/follow")
+def follow_club(club_id: str, user=Depends(get_current_user)):
+    existing = supabase.table("club_followers").select("*") \
+        .eq("club_id", club_id).eq("user_id", user["id"]).execute()
+    if existing.data:
+        raise HTTPException(status_code=400, detail="Already following")
+    supabase.table("club_followers").insert({"club_id": club_id, "user_id": user["id"]}).execute()
+    return {"message": "Club followed"}
+
+@router.post("/{club_id}/unfollow")
+def unfollow_club(club_id: str, user=Depends(get_current_user)):
+    supabase.table("club_followers")\
+        .delete()\
+        .eq("club_id", club_id)\
+        .eq("user_id", user["id"])\
+        .execute()
+    return {"message": "Club unfollowed"}
+
+
+@router.get("/{club_id}/followers")
+def get_club_followers(club_id: str):
+    result = supabase.table("club_followers")\
+        .select("user_id")\
+        .eq("club_id", club_id)\
+        .execute()
+    user_ids = [row["user_id"] for row in result.data]
+    return {"count": len(user_ids), "followers": user_ids}
+
+                                                                                                             
