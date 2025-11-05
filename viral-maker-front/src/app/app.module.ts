@@ -20,6 +20,7 @@ import { StatsCardComponent } from './components/home/components/stats-card/stat
 import { AiCardComponent } from './components/home/components/ai-card/ai-card.component';
 import { ClubsCardComponent } from './components/home/components/clubs-card/clubs-card.component';
 import { EventsCardComponent } from './components/home/components/events-card/events-card.component';
+import { CaptionComponent } from './components/caption/caption.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { EventsCardComponent } from './components/home/components/events-card/ev
     StatsCardComponent,
     AiCardComponent,
     ClubsCardComponent,
-    EventsCardComponent
+    EventsCardComponent,
+    CaptionComponent
   ],
   imports: [
     BrowserModule,

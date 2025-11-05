@@ -26,7 +26,9 @@
 
                 <app-stats-card [stats]="stats"></app-stats-card>
 
-                <app-ai-card [captions]="captions" (generateClick)="generateCaption()"></app-ai-card>
+                <app-ai-card [captions]="captions" (generateLogo)="generateLogo()" (generatePoster)="generatePoster()"
+                    (generateAnnouncement)="generateAnnouncement()" (generateMatchStory)="generateMatchStory()">
+                </app-ai-card>
 
                 <app-clubs-card *ngIf="hasClubs" [userClubs]="userClubs" [isLoading]="isLoadingClubs"
                     (clubClick)="goToClub($event)" (viewAllClick)="goToMyClubs()">

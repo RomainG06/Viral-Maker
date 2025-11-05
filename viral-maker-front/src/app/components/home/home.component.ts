@@ -91,6 +91,26 @@ export class HomeComponent {
     });
   }
 
+  generateLogo(): void {
+    console.log('Génération de logo');
+    alert('Fonctionnalité de génération de logo à venir');
+  }
+
+  generatePoster(): void {
+    console.log('Génération d\'affiche');
+    alert('Fonctionnalité de génération d\'affiche à venir');
+  }
+
+  generateAnnouncement(): void {
+    console.log('Génération de post d\'annonce');
+    alert('Fonctionnalité de génération de post d\'annonce à venir');
+  }
+
+  generateMatchStory(): void {
+    console.log('Génération de story de match');
+    alert('Fonctionnalité de génération de story de match à venir');
+  }
+
   goToMyClubs() {
     this.router.navigate(['/my-clubs']);
   }
