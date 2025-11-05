@@ -1,34 +1,141 @@
-<div
-    class="min-h-screen bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 flex flex-col items-center p-6 space-y-8">
+<div class="min-h-screen bg-gradient-to-br from-navy-950 via-graphite-900 to-navy-900 relative overflow-hidden">
 
-    <h1 class="text-5xl font-extrabold text-white text-center mt-8 drop-shadow-lg">Viral Maker 🎨✨</h1>
-
-    <button
-        class="bg-yellow-400 hover:bg-yellow-300 text-gray-900 font-semibold py-3 px-6 rounded-2xl shadow-xl transition"
-        (click)="buyCredits()">
-        Acheter des crédits ⚡
-    </button>
-
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl w-full mt-8">
-
-        <div *ngFor="let sport of sports"
-            class="bg-white bg-opacity-20 backdrop-blur-lg rounded-3xl p-6 flex flex-col items-center text-white shadow-xl transition transform hover:scale-105 hover:-translate-y-1 hover:shadow-2xl active:scale-95 cursor-pointer duration-300 ease-in-out"
-            (click)="goToSport(sport.name)">
-            <div class="text-4xl mb-4">🎨</div>
-            <h2 class="text-2xl font-bold mb-2">{{ sport.name }}</h2>
-            <p class="text-center text-sm">Génère un contenu viral sur ce thème !</p>
-        </div>
+    <div class="absolute inset-0 overflow-hidden pointer-events-none">
+        <div class="absolute top-0 left-1/4 w-96 h-96 bg-electric-500/10 rounded-full blur-3xl animate-float"></div>
+        <div class="absolute bottom-0 right-1/4 w-96 h-96 bg-lime-500/10 rounded-full blur-3xl animate-float"
+            style="animation-delay: 2s;"></div>
+        <div class="absolute inset-0 bg-pattern-grid opacity-5"></div>
     </div>
 
-    <button (click)="goToCreateClub()"
-        class="mt-8 bg-blue-500 hover:bg-blue-400 text-white font-semibold py-3 px-6 rounded-2xl shadow-xl transition">
-        Créer un nouveau club 🏆
-    </button>
+    <div class="relative z-10">
 
-    <div *ngIf="captions.length > 0" class="mt-4">
-        <h2 class="text-xl font-bold mb-2">Résultats :</h2>
-        <ul>
-            <li *ngFor="let caption of captions">{{ caption }}</li>
-        </ul>
+        <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-8">
+            <div class="space-y-4 animate-slide-up">
+                <h1 class="text-4xl sm:text-5xl font-display font-bold text-white">
+                    Dashboard
+                </h1>
+                <p class="text-lg text-graphite-300">
+                    Bienvenue sur votre espace de création de contenu viral
+                </p>
+            </div>
+        </section>
+
+        <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 items-stretch">
+
+                <app-stats-card [stats]="stats"></app-stats-card>
+
+                <app-ai-card [captions]="captions" (generateClick)="generateCaption()"></app-ai-card>
+
+                <app-clubs-card *ngIf="hasClubs" [userClubs]="userClubs" [isLoading]="isLoadingClubs"
+                    (clubClick)="goToClub($event)" (viewAllClick)="goToMyClubs()">
+                </app-clubs-card>
+
+                <app-events-card [upcomingEvents]="upcomingEvents"></app-events-card>
+
+                <div *ngIf="!hasClubs && !isLoadingClubs"
+                    class="lg:col-span-2 card-glass p-8 space-y-6 border-2 border-electric-500/30 hover:border-lime-400/50 transition-all duration-300 hover:shadow-xl hover:shadow-electric-500/20 bg-gradient-to-r from-navy-500/20 to-electric-500/20 group animate-slide-up"
+                    style="animation-delay: 0.4s;">
+                    <div class="text-center space-y-4">
+                        <div
+                            class="w-16 h-16 bg-gradient-to-br from-lime-400 to-electric-500 rounded-2xl flex items-center justify-center mx-auto shadow-glow-lime group-hover:scale-110 transition-transform duration-300">
+                            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M13 10V3L4 14h7v7l9-11h-7z" />
+                            </svg>
+                        </div>
+
+                        <h2 class="text-3xl font-display font-bold text-white">
+                            Prêt à devenir viral ? 🚀
+                        </h2>
+
+                        <p class="text-graphite-300 text-lg max-w-2xl mx-auto">
+                            Créez votre premier club et commencez à générer du contenu sportif engageant avec
+                            l'intelligence artificielle
+                        </p>
+
+                        <div class="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
+                            <button (click)="goToCreateClub()"
+                                class="btn-accent text-lg px-8 py-4 flex items-center space-x-2 group-hover:shadow-lg transition-all duration-300">
+                                <svg class="w-6 h-6 group-hover:rotate-12 transition-transform duration-300" fill="none"
+                                    stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                                </svg>
+                                <span>Créer mon premier club</span>
+                            </button>
+
+                            <button (click)="goToExploreClubs()"
+                                class="btn-ghost text-lg px-8 py-4 flex items-center space-x-2">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                                </svg>
+                                <span>Explorer les clubs</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
+            <div class="card-glass p-6 border border-white/10">
+                <h3 class="text-xl font-bold text-white mb-4">Actions rapides</h3>
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                    <button (click)="goToCreateClub()"
+                        class="bg-white/5 hover:bg-white/10 rounded-xl p-4 border border-white/5 hover:border-lime-400/30 transition-all duration-200 flex flex-col items-center space-y-2 group">
+                        <div
+                            class="w-12 h-12 bg-gradient-to-br from-lime-400 to-electric-500 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                            </svg>
+                        </div>
+                        <span class="text-sm text-graphite-300 group-hover:text-white transition-colors">Créer un
+                            club</span>
+                    </button>
+
+                    <button (click)="generateCaption()"
+                        class="bg-white/5 hover:bg-white/10 rounded-xl p-4 border border-white/5 hover:border-lime-400/30 transition-all duration-200 flex flex-col items-center space-y-2 group">
+                        <div
+                            class="w-12 h-12 bg-gradient-to-br from-electric-400 to-navy-500 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M13 10V3L4 14h7v7l9-11h-7z" />
+                            </svg>
+                        </div>
+                        <span class="text-sm text-graphite-300 group-hover:text-white transition-colors">Générer
+                            IA</span>
+                    </button>
+
+                    <button (click)="goToExploreClubs()"
+                        class="bg-white/5 hover:bg-white/10 rounded-xl p-4 border border-white/5 hover:border-lime-400/30 transition-all duration-200 flex flex-col items-center space-y-2 group">
+                        <div
+                            class="w-12 h-12 bg-gradient-to-br from-navy-400 to-electric-400 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                            </svg>
+                        </div>
+                        <span class="text-sm text-graphite-300 group-hover:text-white transition-colors">Explorer</span>
+                    </button>
+
+                    <button (click)="buyCredits()"
+                        class="bg-white/5 hover:bg-white/10 rounded-xl p-4 border border-white/5 hover:border-lime-400/30 transition-all duration-200 flex flex-col items-center space-y-2 group">
+                        <div
+                            class="w-12 h-12 bg-gradient-to-br from-lime-500 to-lime-600 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                        </div>
+                        <span class="text-sm text-graphite-300 group-hover:text-white transition-colors">Crédits</span>
+                    </button>
+                </div>
+            </div>
+        </section>
     </div>
 </div>

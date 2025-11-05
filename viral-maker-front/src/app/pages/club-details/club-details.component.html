@@ -1,48 +1,196 @@
-<div class="max-w-5xl mx-auto py-10 px-4 animate-fadeIn">
-    <div class="absolute top-15 right-6 flex gap-3 z-10">
-        <button (click)="null"
-            class="w-10 h-10 flex items-center justify-center bg-yellow-400 hover:bg-yellow-500 rounded-full shadow transition">
-            ✏️
-        </button>
-        <button (click)="confirmDeleteClub()"
-            class="w-10 h-10 flex items-center justify-center bg-red-500 hover:bg-red-600 text-white rounded-full shadow transition">
-            🗑️
-        </button>
-        <button (click)="toggleFollow()" [ngClass]="{
-            'bg-indigo-500 text-white hover:bg-indigo-600': !isFollowing,
-            'bg-gray-300 text-gray-700 hover:bg-gray-400': isFollowing
-        }" class="w-10 h-10 flex items-center justify-center rounded-full shadow transition">
-            {{ isFollowing ? '✔️' : '➕' }}
-        </button>
-        <button (click)="toggleFollow()" class="px-4 py-2 rounded-full shadow text-white"
-            [ngClass]="isFollowing ? 'bg-gray-500 hover:bg-gray-600' : 'bg-yellow-400 hover:bg-yellow-500'">
-            {{ isFollowing ? 'Ne plus suivre' : 'Suivre' }}
-        </button>
+<div class="min-h-screen bg-gradient-to-br from-graphite-50 via-white to-navy-50">
 
+    <div class="relative h-80 bg-gradient-to-br from-navy-600 via-electric-600 to-navy-800 overflow-hidden">
+        <div class="absolute inset-0 bg-pattern-grid opacity-10"></div>
+
+        <div class="absolute inset-0 bg-gradient-to-t from-navy-900/80 via-transparent to-transparent"></div>
+
+        <div class="absolute top-20 right-20 w-64 h-64 bg-lime-400/20 rounded-full blur-3xl animate-float"></div>
+        <div class="absolute bottom-10 left-20 w-72 h-72 bg-electric-400/20 rounded-full blur-3xl animate-pulse-slow">
+        </div>
+
+        <div class="absolute top-6 right-6 flex gap-3 z-10">
+            <button (click)="null"
+                class="w-11 h-11 flex items-center justify-center bg-lime-400 hover:bg-lime-500 text-graphite-900 rounded-xl shadow-lg hover:shadow-glow-lime transition-all duration-300 hover:scale-110 active:scale-95">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                </svg>
+            </button>
+            <button (click)="confirmDeleteClub()"
+                class="w-11 h-11 flex items-center justify-center bg-red-500 hover:bg-red-600 text-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 active:scale-95">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                </svg>
+            </button>
+            <button (click)="toggleFollow()" [ngClass]="{
+                        'bg-gradient-to-r from-navy-500 to-electric-500 text-white shadow-glow': !isFollowing,
+                        'bg-graphite-300 text-graphite-700 shadow-lg': isFollowing
+                    }"
+                class="px-5 py-2.5 rounded-xl font-bold text-sm transition-all duration-300 hover:scale-105 active:scale-95 flex items-center space-x-2">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                    <path *ngIf="!isFollowing"
+                        d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" />
+                    <path *ngIf="isFollowing" fill-rule="evenodd"
+                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                        clip-rule="evenodd" />
+                </svg>
+                <span>{{ isFollowing ? 'Suivi' : 'Suivre' }}</span>
+            </button>
+        </div>
+
+        <div class="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2">
+            <div class="relative">
+                <div class="w-32 h-32 rounded-3xl overflow-hidden shadow-2xl border-4 border-white bg-white">
+                    <img [src]="club?.logo_url || 'https://via.placeholder.com/128'" [alt]="club?.name + ' logo'"
+                        class="w-full h-full object-cover" />
+                </div>
+                <div *ngIf="sportName"
+                    class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-lime-400 to-electric-500 text-graphite-900 px-3 py-1 rounded-full text-xs font-bold uppercase shadow-lg">
+                    {{ sportName }}
+                </div>
+            </div>
+        </div>
     </div>
 
-    <div class="text-center mb-10">
-        <h1 class="text-5xl font-extrabold text-indigo-700 tracking-tight mb-2">{{ club?.name }}</h1>
-        <p class="text-lg text-gray-600">{{ club?.city }} · {{ club?.description }}</p>
-    </div>
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
 
-    <div class="flex justify-center mb-10">
-        <img [src]="club?.logo_url || 'https://via.placeholder.com/150'" alt="logo club"
-            class="w-36 h-36 rounded-full shadow-xl border-4 border-indigo-500 object-cover transition transform hover:scale-105 duration-300">
-    </div>
+        <div class="pt-20 pb-8 text-center space-y-4">
+            <h1 class="text-5xl sm:text-6xl font-display font-extrabold text-gradient-primary animate-slide-up">
+                {{ club?.name }}
+            </h1>
 
-    <h2 class="text-3xl font-bold text-gray-800 mb-6">📢 Dernières publications</h2>
+            <div class="flex items-center justify-center space-x-4 text-graphite-600">
+                <div class="flex items-center space-x-2">
+                    <svg class="w-5 h-5 text-electric-600" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd"
+                            d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
+                            clip-rule="evenodd" />
+                    </svg>
+                    <span class="font-semibold">{{ club?.city }}</span>
+                </div>
+                <span class="text-graphite-400">·</span>
+                <div class="flex items-center space-x-2">
+                    <svg class="w-5 h-5 text-lime-600" fill="currentColor" viewBox="0 0 20 20">
+                        <path
+                            d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z" />
+                    </svg>
+                    <span class="font-semibold">125 membres</span>
+                </div>
+            </div>
 
-    <div *ngIf="posts.length === 0" class="text-gray-500 text-center text-lg">Aucune publication pour ce club.</div>
+            <p class="text-lg text-graphite-600 max-w-2xl mx-auto leading-relaxed">
+                {{ club?.description }}
+            </p>
+        </div>
 
-    <div *ngIf="posts.length > 0" class="space-y-6">
-        <div *ngFor="let post of posts"
-            class="bg-white p-6 rounded-xl shadow-lg border border-gray-100 hover:shadow-2xl transition duration-300 ease-in-out transform hover:-translate-y-1">
-            <p class="text-gray-800 text-lg leading-relaxed mb-3">{{ post.content }}</p>
+        <div class="grid grid-cols-3 gap-4 mb-12">
+            <div class="card-glass p-6 text-center space-y-2 hover-lift">
+                <div class="text-3xl font-bold text-gradient-primary">42</div>
+                <p class="text-sm text-graphite-600 font-medium">Publications</p>
+            </div>
+            <div class="card-glass p-6 text-center space-y-2 hover-lift">
+                <div class="text-3xl font-bold text-gradient-accent">125</div>
+                <p class="text-sm text-graphite-600 font-medium">Followers</p>
+            </div>
+            <div class="card-glass p-6 text-center space-y-2 hover-lift">
+                <div class="text-3xl font-bold text-lime-600">4.8</div>
+                <p class="text-sm text-graphite-600 font-medium">Rating</p>
+            </div>
+        </div>
+
+        <div class="pb-16 space-y-6">
+
             <div class="flex items-center justify-between">
-                <span class="text-sm text-gray-500">Publié le {{ post.created_at | date:'medium' }}</span>
-                <button class="text-indigo-600 text-sm font-medium hover:underline transition"
-                    (click)="likePost(post)">👍 J’aime</button>
+                <h2 class="text-3xl font-display font-bold text-navy-800 flex items-center space-x-3">
+                    <div
+                        class="w-10 h-10 bg-gradient-to-br from-electric-400 to-navy-600 rounded-xl flex items-center justify-center">
+                        <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd"
+                                d="M18 13V5a2 2 0 00-2-2H4a2 2 0 00-2 2v8a2 2 0 002 2h3l3 3 3-3h3a2 2 0 002-2zM5 7a1 1 0 011-1h8a1 1 0 110 2H6a1 1 0 01-1-1zm1 3a1 1 0 100 2h3a1 1 0 100-2H6z"
+                                clip-rule="evenodd" />
+                        </svg>
+                    </div>
+                    <span>Publications</span>
+                </h2>
+                <button class="btn-accent text-sm flex items-center space-x-2">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                    </svg>
+                    <span>Nouveau post</span>
+                </button>
+            </div>
+
+            <div *ngIf="posts.length === 0" class="card-glass p-12 text-center space-y-4">
+                <div class="w-16 h-16 mx-auto bg-graphite-100 rounded-2xl flex items-center justify-center">
+                    <svg class="w-8 h-8 text-graphite-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                    </svg>
+                </div>
+                <p class="text-graphite-500 text-lg font-medium">Aucune publication pour le moment</p>
+                <p class="text-graphite-400 text-sm">Soyez le premier à partager du contenu !</p>
+            </div>
+
+            <div *ngIf="posts.length > 0" class="space-y-4">
+                <article *ngFor="let post of posts" class="card-elevated p-6 hover-lift space-y-4 group">
+
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center space-x-3">
+                            <div
+                                class="w-10 h-10 bg-gradient-to-br from-navy-500 to-electric-500 rounded-xl flex items-center justify-center">
+                                <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+                                        clip-rule="evenodd" />
+                                </svg>
+                            </div>
+                            <div>
+                                <p class="font-bold text-navy-800">{{ club?.name }}</p>
+                                <p class="text-xs text-graphite-500">{{ post.created_at | date:'medium' }}</p>
+                            </div>
+                        </div>
+
+                        <button class="p-2 hover:bg-graphite-100 rounded-lg transition-colors duration-200">
+                            <svg class="w-5 h-5 text-graphite-400" fill="currentColor" viewBox="0 0 20 20">
+                                <path
+                                    d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z" />
+                            </svg>
+                        </button>
+                    </div>
+
+                    <p class="text-graphite-700 text-lg leading-relaxed">
+                        {{ post.content }}
+                    </p>
+
+                    <div class="flex items-center space-x-6 pt-4 border-t border-graphite-100">
+                        <button (click)="likePost(post)"
+                            class="flex items-center space-x-2 text-graphite-600 hover:text-electric-600 transition-colors duration-200 group">
+                            <svg class="w-5 h-5 group-hover:scale-110 transition-transform duration-200"
+                                fill="currentColor" viewBox="0 0 20 20">
+                                <path
+                                    d="M2 10.5a1.5 1.5 0 113 0v6a1.5 1.5 0 01-3 0v-6zM6 10.333v5.43a2 2 0 001.106 1.79l.05.025A4 4 0 008.943 18h5.416a2 2 0 001.962-1.608l1.2-6A2 2 0 0015.56 8H12V4a2 2 0 00-2-2 1 1 0 00-1 1v.667a4 4 0 01-.8 2.4L6.8 7.933a4 4 0 00-.8 2.4z" />
+                            </svg>
+                            <span class="text-sm font-semibold">J'aime</span>
+                        </button>
+                        <button
+                            class="flex items-center space-x-2 text-graphite-600 hover:text-navy-600 transition-colors duration-200">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                            </svg>
+                            <span class="text-sm font-semibold">Commenter</span>
+                        </button>
+                        <button
+                            class="flex items-center space-x-2 text-graphite-600 hover:text-lime-600 transition-colors duration-200 ml-auto">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
+                            </svg>
+                            <span class="text-sm font-semibold">Partager</span>
+                        </button>
+                    </div>
+                </article>
             </div>
         </div>
     </div>

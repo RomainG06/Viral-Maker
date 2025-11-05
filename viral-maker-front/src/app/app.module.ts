@@ -16,6 +16,10 @@ import { MyClubsComponent } from './pages/my-clubs/my-clubs.component';
 import { ClubCardComponent } from './components/club-card/club-card.component';
 import { ExploreClubsComponent } from './pages/explore-clubs/explore-clubs.component';
 import { ClubDetailsComponent } from './pages/club-details/club-details.component';
+import { StatsCardComponent } from './components/home/components/stats-card/stats-card.component';
+import { AiCardComponent } from './components/home/components/ai-card/ai-card.component';
+import { ClubsCardComponent } from './components/home/components/clubs-card/clubs-card.component';
+import { EventsCardComponent } from './components/home/components/events-card/events-card.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +34,11 @@ import { ClubDetailsComponent } from './pages/club-details/club-details.componen
     MyClubsComponent,
     ClubCardComponent,
     ExploreClubsComponent,
-    ClubDetailsComponent
+    ClubDetailsComponent,
+    StatsCardComponent,
+    AiCardComponent,
+    ClubsCardComponent,
+    EventsCardComponent
   ],
   imports: [
     BrowserModule,

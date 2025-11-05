@@ -1,73 +1,266 @@
-<div class="max-w-md mx-auto mt-10 p-6 bg-white rounded-lg shadow-md">
-    <h2 class="text-2xl font-semibold mb-6 text-center">Créer un nouveau club</h2>
+<!-- Athletic Create Club Page - Modern Form Design -->
+<div
+    class="min-h-screen bg-gradient-to-br from-navy-950 via-graphite-900 to-electric-950 relative overflow-hidden py-12">
 
-    <form (ngSubmit)="onSubmit()" #clubForm="ngForm" class="space-y-5">
-        <div>
-            <label for="name" class="block text-gray-700 font-medium mb-1">Nom du club <span
-                    class="text-red-500">*</span></label>
-            <input type="text" id="name" name="name" required [(ngModel)]="club.name" #name="ngModel"
-                class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="Ex: Les Tigres" />
-            <div *ngIf="name.invalid && name.touched" class="text-red-500 text-sm mt-1">Le nom est obligatoire.</div>
-        </div>
+    <div class="absolute inset-0 overflow-hidden pointer-events-none">
+        <div class="absolute top-20 left-20 w-96 h-96 bg-lime-500/10 rounded-full blur-3xl animate-float"></div>
+        <div class="absolute bottom-20 right-20 w-96 h-96 bg-electric-500/10 rounded-full blur-3xl animate-float"
+            style="animation-delay: 2s;"></div>
+        <div class="absolute inset-0 bg-pattern-grid opacity-5"></div>
+    </div>
 
-        <div>
-            <label for="description" class="block text-gray-700 font-medium mb-1">Description <span
-                    class="text-red-500">*</span></label>
-            <textarea id="description" name="description" required rows="3" [(ngModel)]="club.description"
-                #description="ngModel"
-                class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="Décrivez le club"></textarea>
-            <div *ngIf="description.invalid && description.touched" class="text-red-500 text-sm mt-1">La description est
-                obligatoire.</div>
-        </div>
+    <div class="relative z-10 max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
 
-        <div>
-            <label for="sport_id" class="block text-gray-700 font-medium mb-1">Sport <span
-                    class="text-red-500">*</span></label>
-            <select id="sport_id" name="sport_id" required [(ngModel)]="club.sport_id" #sport_id="ngModel"
-                class="w-full border border-gray-300 rounded px-3 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500">
-                <option value="" disabled selected>Choisissez un sport</option>
-                <option *ngFor="let sport of sports" [value]="sport.id">{{ sport.name }}</option>
-            </select>
-            <div *ngIf="sport_id.invalid && sport_id.touched" class="text-red-500 text-sm mt-1">Le sport est
-                obligatoire.</div>
-        </div>
-
-        <div>
-            <label for="city" class="block text-gray-700 font-medium mb-1">Ville <span
-                    class="text-red-500">*</span></label>
-            <input type="text" id="city" name="city" required [(ngModel)]="club.city" #city="ngModel"
-                class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="Ex: Paris" />
-            <div *ngIf="city.invalid && city.touched" class="text-red-500 text-sm mt-1">La ville est obligatoire.</div>
-        </div>
-        <div>
-            <label class="block text-gray-700 font-medium mb-1">Logo du club</label>
-
-            <div class="w-full h-40 border-2 border-dashed border-indigo-500 rounded-lg flex flex-col items-center justify-center cursor-pointer transition hover:border-yellow-400"
-                (dragover)="onDragOver($event)" (drop)="onDrop($event)" (click)="fileInput.click()">
-
-                <ng-container *ngIf="!selectedFile && !club.logo_url && !previewUrl">
-                    <span class="text-4xl text-indigo-500">+</span>
-                    <p class="text-gray-500 text-sm mt-2">Cliquez ou glissez-déposez un logo</p>
-                </ng-container>
-
-                <ng-container *ngIf="previewUrl || club.logo_url">
-                    <img [src]="previewUrl || club.logo_url" alt="Logo preview"
-                        class="w-24 h-24 object-cover rounded-full shadow-md mb-2" />
-                    <button type="button" class="text-xs text-red-500 hover:underline" (click)="removeLogo()">
-                        Supprimer
-                    </button>
-                </ng-container>
-
+        <div class="text-center mb-10 space-y-4 animate-slide-up">
+            <div
+                class="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-lime-400 to-electric-500 rounded-2xl shadow-glow-lime mb-2">
+                <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd"
+                        d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z"
+                        clip-rule="evenodd" />
+                </svg>
             </div>
-            <input type="file" #fileInput class="hidden" (change)="onFileSelected($event)" accept="image/*" />
+            <h1 class="text-5xl font-display font-extrabold text-white text-shadow-lg">
+                Créer un club
+            </h1>
+            <p class="text-graphite-300 text-lg">
+                Lancez votre communauté sportive en quelques minutes
+            </p>
         </div>
 
-        <button type="submit" [disabled]="clubForm.invalid"
-            class="w-full bg-blue-600 text-white font-semibold py-2 rounded hover:bg-blue-700 disabled:opacity-50 transition">
-            Créer le club
-        </button>
-    </form>
+        <div class="card-glass p-8 sm:p-10 space-y-8">
+            <form (ngSubmit)="onSubmit()" #clubForm="ngForm" class="space-y-6">
+
+                <div class="space-y-2">
+                    <label for="name" class="block text-sm font-bold text-white/90">
+                        Nom du club
+                        <span class="text-red-400 ml-1">*</span>
+                    </label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                            <svg class="w-5 h-5 text-graphite-400" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                        <input type="text" id="name" name="name" required [(ngModel)]="club.name" #name="ngModel"
+                            class="input-modern pl-12 text-graphite-800 placeholder-graphite-400"
+                            placeholder="Ex: Les Tigres de Paris" />
+                    </div>
+                    <p *ngIf="name.invalid && name.touched"
+                        class="text-red-400 text-sm flex items-center space-x-1 animate-fade-in">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd"
+                                d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
+                                clip-rule="evenodd" />
+                        </svg>
+                        <span>Le nom du club est obligatoire</span>
+                    </p>
+                </div>
+
+                <div class="space-y-2">
+                    <label for="description" class="block text-sm font-bold text-white/90">
+                        Description
+                        <span class="text-red-400 ml-1">*</span>
+                    </label>
+                    <textarea id="description" name="description" required rows="4" [(ngModel)]="club.description"
+                        #description="ngModel"
+                        class="input-modern text-graphite-800 placeholder-graphite-400 resize-none"
+                        placeholder="Décrivez votre club, ses valeurs, ses objectifs..."></textarea>
+                    <p *ngIf="description.invalid && description.touched"
+                        class="text-red-400 text-sm flex items-center space-x-1 animate-fade-in">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd"
+                                d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
+                                clip-rule="evenodd" />
+                        </svg>
+                        <span>La description est obligatoire</span>
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+
+                    <div class="space-y-2">
+                        <label for="sport_id" class="block text-sm font-bold text-white/90">
+                            Sport
+                            <span class="text-red-400 ml-1">*</span>
+                        </label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                                <svg class="w-5 h-5 text-graphite-400" fill="currentColor" viewBox="0 0 20 20">
+                                    <path
+                                        d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z" />
+                                </svg>
+                            </div>
+                            <select id="sport_id" name="sport_id" required [(ngModel)]="club.sport_id"
+                                #sport_id="ngModel"
+                                class="input-modern pl-12 text-graphite-800 appearance-none cursor-pointer">
+                                <option value="" disabled selected>Choisissez un sport</option>
+                                <option *ngFor="let sport of sports" [value]="sport.id">{{ sport.name }}</option>
+                            </select>
+                            <div class="absolute inset-y-0 right-0 pr-4 flex items-center pointer-events-none">
+                                <svg class="w-5 h-5 text-graphite-400" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M19 9l-7 7-7-7" />
+                                </svg>
+                            </div>
+                        </div>
+                        <p *ngIf="sport_id.invalid && sport_id.touched"
+                            class="text-red-400 text-sm flex items-center space-x-1 animate-fade-in">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd"
+                                    d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                            <span>Sélectionnez un sport</span>
+                        </p>
+                    </div>
+
+                    <div class="space-y-2">
+                        <label for="city" class="block text-sm font-bold text-white/90">
+                            Ville
+                            <span class="text-red-400 ml-1">*</span>
+                        </label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                                <svg class="w-5 h-5 text-graphite-400" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd"
+                                        d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
+                                        clip-rule="evenodd" />
+                                </svg>
+                            </div>
+                            <input type="text" id="city" name="city" required [(ngModel)]="club.city" #city="ngModel"
+                                class="input-modern pl-12 text-graphite-800 placeholder-graphite-400"
+                                placeholder="Ex: Paris" />
+                        </div>
+                        <p *ngIf="city.invalid && city.touched"
+                            class="text-red-400 text-sm flex items-center space-x-1 animate-fade-in">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd"
+                                    d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                            <span>La ville est obligatoire</span>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="space-y-2">
+                    <label class="block text-sm font-bold text-white/90">
+                        Logo du club
+                        <span class="text-graphite-400 font-normal ml-2 text-xs">(optionnel)</span>
+                    </label>
+
+                    <div class="relative">
+                        <div class="w-full min-h-[12rem] border-2 border-dashed rounded-2xl flex flex-col items-center justify-center cursor-pointer transition-all duration-300 group"
+                            [ngClass]="{
+                                 'border-lime-400 bg-lime-400/10': selectedFile || club.logo_url || previewUrl,
+                                 'border-white/20 bg-white/5 hover:border-electric-400 hover:bg-electric-400/10': !(selectedFile || club.logo_url || previewUrl)
+                             }" (dragover)="onDragOver($event)" (drop)="onDrop($event)" (click)="fileInput.click()">
+
+                            <ng-container *ngIf="!selectedFile && !club.logo_url && !previewUrl">
+                                <div class="text-center space-y-4 p-6">
+                                    <div
+                                        class="w-16 h-16 mx-auto bg-gradient-to-br from-electric-400 to-navy-600 rounded-2xl flex items-center justify-center shadow-glow-electric group-hover:scale-110 transition-transform duration-300">
+                                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor"
+                                            viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <p class="text-white font-semibold text-lg mb-1">Glissez-déposez votre logo</p>
+                                        <p class="text-graphite-400 text-sm">ou cliquez pour parcourir</p>
+                                    </div>
+                                    <p class="text-graphite-500 text-xs">PNG, JPG jusqu'à 5MB</p>
+                                </div>
+                            </ng-container>
+
+                            <ng-container *ngIf="previewUrl || club.logo_url">
+                                <div class="relative p-6 text-center space-y-4">
+                                    <div class="relative inline-block">
+                                        <img [src]="previewUrl || club.logo_url" alt="Logo preview"
+                                            class="w-32 h-32 object-cover rounded-2xl shadow-2xl border-4 border-white" />
+                                        <div
+                                            class="absolute -top-2 -right-2 w-8 h-8 bg-lime-500 rounded-full flex items-center justify-center shadow-lg">
+                                            <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                                <path fill-rule="evenodd"
+                                                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                                    clip-rule="evenodd" />
+                                            </svg>
+                                        </div>
+                                    </div>
+                                    <p class="text-white font-semibold">Logo téléchargé ✓</p>
+                                    <button type="button" (click)="removeLogo(); $event.stopPropagation()"
+                                        class="text-sm text-red-400 hover:text-red-300 font-semibold hover:underline transition-colors duration-200">
+                                        Supprimer le logo
+                                    </button>
+                                </div>
+                            </ng-container>
+                        </div>
+
+                        <input type="file" #fileInput class="hidden" (change)="onFileSelected($event)"
+                            accept="image/*" />
+                    </div>
+                </div>
+
+                <div class="relative py-4">
+                    <div class="absolute inset-0 flex items-center">
+                        <div class="w-full border-t border-white/10"></div>
+                    </div>
+                </div>
+
+                <div class="space-y-4">
+                    <button type="submit" [disabled]="clubForm.invalid"
+                        class="w-full btn-accent py-4 text-lg font-bold flex items-center justify-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed">
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd"
+                                d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                clip-rule="evenodd" />
+                        </svg>
+                        <span>Créer mon club</span>
+                    </button>
+
+                    <p class="text-center text-graphite-400 text-sm">
+                        En créant un club, vous acceptez nos
+                        <a href="#" class="text-electric-400 hover:text-electric-300 font-semibold transition-colors">
+                            conditions d'utilisation
+                        </a>
+                    </p>
+                </div>
+            </form>
+        </div>
+
+        <div class="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div class="card-glass p-4 text-center space-y-2">
+                <div class="w-10 h-10 mx-auto bg-electric-500/20 rounded-xl flex items-center justify-center">
+                    <svg class="w-5 h-5 text-electric-400" fill="currentColor" viewBox="0 0 20 20">
+                        <path
+                            d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z" />
+                    </svg>
+                </div>
+                <p class="text-xs text-graphite-300">Créez votre communauté</p>
+            </div>
+            <div class="card-glass p-4 text-center space-y-2">
+                <div class="w-10 h-10 mx-auto bg-lime-500/20 rounded-xl flex items-center justify-center">
+                    <svg class="w-5 h-5 text-lime-400" fill="currentColor" viewBox="0 0 20 20">
+                        <path
+                            d="M11 3a1 1 0 10-2 0v1a1 1 0 102 0V3zM15.657 5.757a1 1 0 00-1.414-1.414l-.707.707a1 1 0 001.414 1.414l.707-.707zM18 10a1 1 0 01-1 1h-1a1 1 0 110-2h1a1 1 0 011 1zM5.05 6.464A1 1 0 106.464 5.05l-.707-.707a1 1 0 00-1.414 1.414l.707.707zM5 10a1 1 0 01-1 1H3a1 1 0 110-2h1a1 1 0 011 1zM8 16v-1h4v1a2 2 0 11-4 0zM12 14c.015-.34.208-.646.477-.859a4 4 0 10-4.954 0c.27.213.462.519.476.859h4.002z" />
+                    </svg>
+                </div>
+                <p class="text-xs text-graphite-300">Générez avec l'IA</p>
+            </div>
+            <div class="card-glass p-4 text-center space-y-2">
+                <div class="w-10 h-10 mx-auto bg-navy-500/20 rounded-xl flex items-center justify-center">
+                    <svg class="w-5 h-5 text-navy-400" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd"
+                            d="M12.395 2.553a1 1 0 00-1.45-.385c-.345.23-.614.558-.822.88-.214.33-.403.713-.57 1.116-.334.804-.614 1.768-.84 2.734a31.365 31.365 0 00-.613 3.58 2.64 2.64 0 01-.945-1.067c-.328-.68-.398-1.534-.398-2.654A1 1 0 005.05 6.05 6.981 6.981 0 003 11a7 7 0 1011.95-4.95c-.592-.591-.98-.985-1.348-1.467-.363-.476-.724-1.063-1.207-2.03zM12.12 15.12A3 3 0 017 13s.879.5 2.5.5c0-1 .5-4 1.25-4.5.5 1 .786 1.293 1.371 1.879A2.99 2.99 0 0113 13a2.99 2.99 0 01-.879 2.121z"
+                            clip-rule="evenodd" />
+                    </svg>
+                </div>
+                <p class="text-xs text-graphite-300">Devenez viral</p>
+            </div>
+        </div>
+    </div>
 </div>
