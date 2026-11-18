@@ -1,0 +1,137 @@
+<!-- Glassmorphism Navbar with Sporty Accents -->
+<nav class="sticky top-0 z-50 bg-white/80 backdrop-blur-xl border-b border-graphite-200/50 shadow-lg">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-20">
+
+            <!-- Logo - Athletic & Bold -->
+            <div class="flex items-center space-x-3 group cursor-pointer">
+                <div
+                    class="w-10 h-10 bg-gradient-to-br from-navy-600 to-electric-600 rounded-xl flex items-center justify-center shadow-lg group-hover:shadow-glow transition-all duration-300 group-hover:scale-110">
+                    <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
+                        <path
+                            d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z" />
+                    </svg>
+                </div>
+                <span class="text-2xl font-display font-extrabold text-gradient-primary tracking-tight">
+                    ViralMaker
+                </span>
+            </div>
+
+            <!-- Desktop Navigation -->
+            <div class="hidden md:flex items-center space-x-2">
+                <a href="/home"
+                    class="px-4 py-2 text-graphite-700 font-semibold hover:text-navy-600 hover:bg-navy-50 rounded-xl transition-all duration-200">
+                    Accueil
+                </a>
+                <a *ngIf="isLoggedIn" routerLink="/my-clubs"
+                    class="px-4 py-2 text-graphite-700 font-semibold hover:text-navy-600 hover:bg-navy-50 rounded-xl transition-all duration-200">
+                    Mes Clubs
+                </a>
+                <a href="/explore"
+                    class="px-4 py-2 text-graphite-700 font-semibold hover:text-electric-600 hover:bg-electric-50 rounded-xl transition-all duration-200">
+                    Explorer
+                </a>
+
+                <div class="h-6 w-px bg-graphite-200 mx-2"></div>
+
+                <!-- Credits Badge - Sporty Design -->
+                <div id="credits-display"
+                    class="flex items-center space-x-2 bg-gradient-to-r from-navy-50 to-electric-50 px-4 py-2 rounded-full border-2 border-navy-200 shadow-sm">
+                    <svg class="w-5 h-5 text-navy-600 animate-pulse-slow" fill="currentColor" viewBox="0 0 20 20">
+                        <path
+                            d="M11 3a1 1 0 10-2 0v1a1 1 0 102 0V3zM15.657 5.757a1 1 0 00-1.414-1.414l-.707.707a1 1 0 001.414 1.414l.707-.707zM18 10a1 1 0 01-1 1h-1a1 1 0 110-2h1a1 1 0 011 1zM5.05 6.464A1 1 0 106.464 5.05l-.707-.707a1 1 0 00-1.414 1.414l.707.707zM5 10a1 1 0 01-1 1H3a1 1 0 110-2h1a1 1 0 011 1zM8 16v-1h4v1a2 2 0 11-4 0zM12 14c.015-.34.208-.646.477-.859a4 4 0 10-4.954 0c.27.213.462.519.476.859h4.002z" />
+                    </svg>
+                    <span class="font-bold text-navy-700 text-sm">0</span>
+                </div>
+
+                <!-- Buy Credits Button - Accent Color -->
+                <button (click)="buyCredits()" class="btn-accent flex items-center space-x-2 text-sm">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                        <path
+                            d="M11 3a1 1 0 10-2 0v1a1 1 0 102 0V3zM15.657 5.757a1 1 0 00-1.414-1.414l-.707.707a1 1 0 001.414 1.414l.707-.707zM18 10a1 1 0 01-1 1h-1a1 1 0 110-2h1a1 1 0 011 1zM5.05 6.464A1 1 0 106.464 5.05l-.707-.707a1 1 0 00-1.414 1.414l.707.707zM5 10a1 1 0 01-1 1H3a1 1 0 110-2h1a1 1 0 011 1zM8 16v-1h4v1a2 2 0 11-4 0zM12 14c.015-.34.208-.646.477-.859a4 4 0 10-4.954 0c.27.213.462.519.476.859h4.002z" />
+                    </svg>
+                    <span>Crédits</span>
+                </button>
+
+                <!-- Auth Buttons -->
+                <a *ngIf="!isLoggedIn" routerLink="/login" class="btn-primary text-sm">
+                    Se connecter
+                </a>
+                <a *ngIf="isLoggedIn" routerLink="/profile"
+                    class="w-10 h-10 bg-gradient-to-br from-navy-500 to-electric-500 rounded-full flex items-center justify-center shadow-lg hover:shadow-glow transition-all duration-300 hover:scale-110">
+                    <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+                            clip-rule="evenodd" />
+                    </svg>
+                </a>
+                <button *ngIf="isLoggedIn" (click)="logout()"
+                    class="text-graphite-500 hover:text-red-600 hover:bg-red-50 p-2 rounded-xl transition-all duration-200">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Mobile Menu Button -->
+            <button id="menu-btn"
+                class="md:hidden p-2 text-graphite-700 hover:text-navy-600 hover:bg-navy-50 rounded-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-navy-500">
+                <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+            </button>
+        </div>
+    </div>
+</nav>
+
+<!-- Mobile Menu - Glassmorphism -->
+<div id="mobile-menu"
+    class="hidden md:hidden bg-white/95 backdrop-blur-xl border-b border-graphite-200/50 shadow-2xl animate-slide-in">
+    <div class="max-w-7xl mx-auto px-4 py-4 space-y-2">
+        <a href="/home"
+            class="block px-4 py-3 text-graphite-700 font-semibold hover:text-navy-600 hover:bg-navy-50 rounded-xl transition-all duration-200">
+            Accueil
+        </a>
+        <a *ngIf="isLoggedIn" routerLink="/my-clubs"
+            class="block px-4 py-3 text-graphite-700 font-semibold hover:text-navy-600 hover:bg-navy-50 rounded-xl transition-all duration-200">
+            Mes Clubs
+        </a>
+        <a href="/explore"
+            class="block px-4 py-3 text-graphite-700 font-semibold hover:text-electric-600 hover:bg-electric-50 rounded-xl transition-all duration-200">
+            Explorer
+        </a>
+
+        <div class="h-px bg-graphite-200 my-2"></div>
+
+        <!-- Mobile Credits -->
+        <div id="mobile-credits-display"
+            class="flex items-center justify-between px-4 py-3 bg-gradient-to-r from-navy-50 to-electric-50 rounded-xl">
+            <span class="text-sm font-semibold text-graphite-700">Crédits disponibles</span>
+            <span class="font-bold text-navy-700">0</span>
+        </div>
+
+        <!-- Mobile Buy Button -->
+        <button (click)="buyCredits()" class="w-full btn-accent text-sm justify-center flex items-center space-x-2">
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                <path
+                    d="M11 3a1 1 0 10-2 0v1a1 1 0 102 0V3zM15.657 5.757a1 1 0 00-1.414-1.414l-.707.707a1 1 0 001.414 1.414l.707-.707zM18 10a1 1 0 01-1 1h-1a1 1 0 110-2h1a1 1 0 011 1zM5.05 6.464A1 1 0 106.464 5.05l-.707-.707a1 1 0 00-1.414 1.414l.707.707zM5 10a1 1 0 01-1 1H3a1 1 0 110-2h1a1 1 0 011 1zM8 16v-1h4v1a2 2 0 11-4 0zM12 14c.015-.34.208-.646.477-.859a4 4 0 10-4.954 0c.27.213.462.519.476.859h4.002z" />
+            </svg>
+            <span>Acheter des crédits</span>
+        </button>
+
+        <div class="h-px bg-graphite-200 my-2"></div>
+
+        <!-- Mobile Auth -->
+        <a *ngIf="!isLoggedIn" routerLink="/login" class="block w-full btn-primary text-center text-sm">
+            Se connecter
+        </a>
+        <a *ngIf="isLoggedIn" routerLink="/profile"
+            class="block px-4 py-3 text-navy-600 font-semibold hover:bg-navy-50 rounded-xl transition-all duration-200">
+            Mon Profil
+        </a>
+        <button *ngIf="isLoggedIn" (click)="logout()"
+            class="w-full px-4 py-3 text-red-600 font-semibold hover:bg-red-50 rounded-xl transition-all duration-200 text-left">
+            Déconnexion
+        </button>
+    </div>
+</div>

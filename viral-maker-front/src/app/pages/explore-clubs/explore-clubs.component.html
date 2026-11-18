@@ -1,0 +1,20 @@
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <h2 class="text-4xl font-extrabold text-indigo-700 mb-10 text-center tracking-tight">
+        Explorer les Clubs Sportifs 🏆
+    </h2>
+
+    <div *ngIf="clubs.length === 0" class="text-center text-gray-500 text-lg mt-20">
+        Aucun club disponible pour le moment. ⚽🏀🎾
+    </div>
+
+    <div *ngIf="clubs.length > 0" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+        <app-club-card *ngFor="let club of clubs" [club]="club"></app-club-card>
+    </div>
+
+    <div *ngIf="clubs.length > 0" class="flex justify-center mt-12">
+        <button (click)="loadMore()"
+            class="bg-yellow-400 hover:bg-yellow-300 text-gray-900 font-semibold py-3 px-6 rounded-xl shadow-md transition duration-300">
+            🔄 Charger plus
+        </button>
+    </div>
+</div>

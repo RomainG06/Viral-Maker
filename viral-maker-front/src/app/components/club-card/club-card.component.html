@@ -1,0 +1,85 @@
+<!-- Athletic Club Card - Premium Design -->
+<div (click)="goToDetails()"
+    class="group card-elevated hover-lift cursor-pointer overflow-hidden max-w-sm w-full transition-all duration-300 border-2 border-transparent hover:border-lime-400/50">
+
+    <!-- Club Image with Overlay -->
+    <div class="relative h-48 overflow-hidden bg-gradient-to-br from-navy-600 to-electric-600">
+        <img [src]="club.logo_url || 'https://via.placeholder.com/400x192?text=No+Logo'" [alt]="club.name + ' logo'"
+            class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+
+        <!-- Gradient Overlay -->
+        <div
+            class="absolute inset-0 bg-gradient-to-t from-navy-900/80 via-transparent to-transparent opacity-60 group-hover:opacity-40 transition-opacity duration-300">
+        </div>
+
+        <!-- Sport Badge (Floating) -->
+        <div
+            class="absolute top-4 right-4 bg-gradient-to-r from-lime-400 to-electric-500 text-graphite-900 px-3 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider shadow-glow-lime">
+            {{ club.sport_name || 'Sport' }}
+        </div>
+
+        <!-- Quick Action on Hover -->
+        <div
+            class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            <div
+                class="bg-white/90 backdrop-blur-sm px-6 py-3 rounded-2xl flex items-center space-x-2 transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300 shadow-xl">
+                <span class="text-navy-700 font-bold">Voir le club</span>
+                <svg class="w-5 h-5 text-navy-700 group-hover:translate-x-1 transition-transform duration-300"
+                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                </svg>
+            </div>
+        </div>
+    </div>
+
+    <!-- Card Content -->
+    <div class="p-6 space-y-4">
+
+        <!-- Club Name -->
+        <h3
+            class="text-2xl font-display font-bold text-navy-800 group-hover:text-electric-600 transition-colors duration-300 line-clamp-1">
+            {{ club.name }}
+        </h3>
+
+        <!-- Description -->
+        <p class="text-graphite-600 text-sm leading-relaxed line-clamp-2 min-h-[2.5rem]">
+            {{ club.description }}
+        </p>
+
+        <!-- Divider -->
+        <div class="h-px bg-gradient-to-r from-transparent via-graphite-200 to-transparent"></div>
+
+        <!-- Footer Info -->
+        <div class="flex items-center justify-between text-sm">
+
+            <!-- Location -->
+            <div
+                class="flex items-center space-x-2 text-graphite-600 group-hover:text-electric-600 transition-colors duration-300">
+                <div
+                    class="w-8 h-8 bg-electric-50 rounded-lg flex items-center justify-center group-hover:bg-electric-100 transition-colors duration-300">
+                    <svg class="w-4 h-4 text-electric-600" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd"
+                            d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
+                            clip-rule="evenodd" />
+                    </svg>
+                </div>
+                <span class="font-semibold">{{ club.city }}</span>
+            </div>
+
+            <!-- Members / Engagement Indicator -->
+            <div class="flex items-center space-x-1 text-lime-600">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                    <path
+                        d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z" />
+                </svg>
+                <span class="text-xs font-bold">Actif</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom Accent Line -->
+    <div
+        class="h-1 bg-gradient-to-r from-navy-500 via-electric-500 to-lime-500 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500">
+    </div>
+</div>

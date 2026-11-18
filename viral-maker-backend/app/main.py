@@ -1,7 +1,22 @@
 from fastapi import FastAPI
-from app.api import routes_captions, routes_image, routes_credits, routes_payment
+from app.api import routes_captions, routes_image, routes_credits, routes_payment, routes_sports, routes_users, routes_clubs
+from fastapi.middleware.cors import CORSMiddleware
 
-app = FastAPI()
+app = FastAPI(redirect_slashes=False)
+
+origins = [
+    "http://localhost:4200",
+    "http://127.0.0.1:4200",
+]
+
+# Configuration des CORS pour autoriser les requêtes depuis le front-end
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,  # ou ["*"] pour autoriser tout le monde (à éviter en prod)
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 @app.get("/")
 def read_root():
@@ -10,4 +25,9 @@ def read_root():
 app.include_router(routes_captions.router, prefix="/generate-captions")
 app.include_router(routes_image.router, prefix="/generate-image")
 app.include_router(routes_credits.router, prefix="/credits")
-app.include_router(routes_payment.router, prefix="/purchase-credits")
+app.include_router(routes_payment.router, prefix="/payment")
+app.include_router(routes_users.router, prefix="/users")
+app.include_router(routes_sports.router, prefix="/sports")
+app.include_router(routes_clubs.router, prefix="/clubs")
+
+
